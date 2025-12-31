@@ -7,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { useToast } from "@/hooks/use-toast";
 import { Loader2, Send, CheckCircle } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const formSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters").max(100, "Name is too long"),
@@ -68,12 +69,24 @@ const ApplicationForm = () => {
     setIsSubmitting(true);
     
     try {
-      // For now, we'll show a success message
-      // Email integration will be added when Cloud is enabled
       console.log("Form data:", data);
       
-      // Simulate API call
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      // Call the edge function to send email
+      const { data: result, error } = await supabase.functions.invoke("send-application", {
+        body: {
+          name: data.name,
+          mobile: data.mobile,
+          service: data.service,
+          subService: data.subService,
+          message: data.message,
+        },
+      });
+
+      if (error) {
+        throw error;
+      }
+
+      console.log("Email sent:", result);
       
       setIsSubmitted(true);
       toast({
@@ -86,10 +99,11 @@ const ApplicationForm = () => {
       
       // Reset success state after 5 seconds
       setTimeout(() => setIsSubmitted(false), 5000);
-    } catch (error) {
+    } catch (error: any) {
+      console.error("Submission error:", error);
       toast({
         title: "Submission Failed",
-        description: "Please try again or contact us directly.",
+        description: "Please try again or contact us directly at +91 9876610225",
         variant: "destructive",
       });
     } finally {
