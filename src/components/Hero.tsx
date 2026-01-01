@@ -54,22 +54,7 @@ const Hero = () => {
           </Button>
         </div>
 
-        {/* Stats */}
-        <div className="animate-fade-in-up delay-400 mt-16 grid grid-cols-3 gap-8 max-w-lg mx-auto">
-          <div className="text-center">
-            <div className="text-3xl sm:text-4xl font-bold text-primary-foreground">10+</div>
-            <div className="text-sm text-primary-foreground/70">Years Experience</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl sm:text-4xl font-bold text-primary-foreground">5000+</div>
-            <div className="text-sm text-primary-foreground/70">Happy Clients</div>
-          </div>
-          <div className="text-center">
-            <div className="text-3xl sm:text-4xl font-bold text-primary-foreground">₹50Cr+</div>
-            <div className="text-sm text-primary-foreground/70">Loans Disbursed</div>
-          </div>
-        </div>
-      </div>
+      
 
       {/* Scroll indicator */}
       <div className="absolute bottom-8 left-1/2 -translate-x-1/2 animate-bounce">
